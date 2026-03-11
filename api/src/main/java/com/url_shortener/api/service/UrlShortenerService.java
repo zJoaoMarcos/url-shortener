@@ -1,6 +1,7 @@
 package com.url_shortener.api.service;
 
 import com.url_shortener.api.entity.UrlEntity;
+import com.url_shortener.api.exception.UrlNotFoundException;
 import com.url_shortener.api.generator.IdGenerator;
 import com.url_shortener.api.repository.UrlRepository;
 import com.url_shortener.api.util.Base62;
@@ -33,6 +34,6 @@ public class UrlShortenerService {
     public String getOriginalUrl(String shortcode) {
         return urlRepository.findById(shortcode)
                 .map(UrlEntity::getLongUrl)
-                .orElseThrow(() -> new RuntimeException("URL não encontrada"));
+                .orElseThrow(() -> new UrlNotFoundException(shortcode));
     }
 }
